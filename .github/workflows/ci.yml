@@ -1,5 +1,10 @@
 name: Build and Push CI
 
+on: 
+  push:
+    branches:
+      - master
+
 jobs:
   build:
     name: 'Build and Push'
