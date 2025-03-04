@@ -41,10 +41,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker Image
-        run: |
-          docker build -t cyberplank/devops-ci-api:${{ steps.generate-tags.outputs.SHA }} .
+      - name: Build and Push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: cyberplank/devops-ci-api:${{ steps.generate-tags.outputs.SHA }}, cyberplank/devops-ci-api:latest
 
-      - name: Push Docker Image
-        run: |
-          docker push cyberplank/devops-ci-api:${{ steps.generate-tags.outputs.SHA }}
+      # - name: Build Docker Image
+      #   run: |
+      #     docker build -t cyberplank/devops-ci-api:${{ steps.generate-tags.outputs.SHA }} .
+
+      # - name: Push Docker Image
+      #   run: |
+      #     docker push cyberplank/devops-ci-api:${{ steps.generate-tags.outputs.SHA }}
