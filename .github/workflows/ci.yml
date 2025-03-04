@@ -43,8 +43,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t devops-ci-api:${{ steps.generate-tags.outputs.SHA }} .
+          docker build -t cyberplank/devops-ci-api:${{ steps.generate-tags.outputs.SHA }} .
 
       - name: Push Docker Image
         run: |
-          docker push devops-ci-api:${{ steps.generate-tags.outputs.SHA }}
+          docker push cyberplank/devops-ci-api:${{ steps.generate-tags.outputs.SHA }}
