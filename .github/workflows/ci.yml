@@ -26,6 +26,13 @@ jobs:
       - run: npm ci
       - run: npm test
 
+      - name: Generate Tags
+        id: generate-tags
+        run: |
+          SHA=$(echo $GITHUB_SHA | head -c7)
+          echo "SHA=$SHA" >> $GITHUB_OUTPUT
+          echo "VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+
       - name: Build Docker Image
         run: |
-          docker build -t devops-ci-api:latest .
+          docker build -t devops-ci-api:${{ steps.generate-tags.outputs.SHA }} .
