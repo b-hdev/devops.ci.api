@@ -42,7 +42,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: 'arn:aws:iam::741448934450:role/ecr_role'
+          role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
           aws-region: us-east-1
 
       - name: Login to AWS ECR
@@ -68,12 +68,12 @@ jobs:
         with:
           service: devops-ecr-api
           image: ${{ steps.build-docker-image.outputs.image }}
-          access-role-arn: arn:aws:iam::741448934450:role/app-runner-role
+          access-role-arn: ${{ secrets.ACCESS_ROLE_ARN }}
           region: us-east-1
           cpu: 1
           memory: 2G
           port: 3000
-          wait-for-service-stability-seconds: 180
+          wait-for-service-stability-seconds: 300
         
       - name: App Runner check
         run: echo "App Runner running... ${{ steps.deploy-app-runner.outputs.service-url }}"
