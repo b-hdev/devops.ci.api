@@ -8,7 +8,7 @@ on:
 permissions:
   id-token: write
   contents: write
-#  issues: write
+  issues: write
 
 jobs:
   build:
