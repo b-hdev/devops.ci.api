@@ -57,7 +57,7 @@ jobs:
         run: |
           docker build -t $REGISTRY/devops-ecr-ci:$TAG .
           docker push $REGISTRY/devops-ecr-ci:$TAG
-          docker tag -t $REGISTRY/devops-ecr-ci:$TAG $REGISTRY/devops-ecr-ci:latest
+          docker tag $REGISTRY/devops-ecr-ci:$TAG $REGISTRY/devops-ecr-ci:latest
           docker push $REGISTRY/devops-ecr-ci:latest
           IMAGE=$(echo $REGISTRY/devops-ecr-ci:$TAG)
           echo "image=$IMAGE" >> $GITHUB_OUTPUT
