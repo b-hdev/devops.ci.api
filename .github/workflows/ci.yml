@@ -8,7 +8,7 @@ on:
 permissions:
   id-token: write
   contents: write
-  issues: write
+#  issues: write
 
 jobs:
   build:
@@ -42,7 +42,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: 'arn:aws:iam::741448934450:role/ecr-role'
+          role-to-assume: 'arn:aws:iam::741448934450:role/ecr_role'
           aws-region: us-east-1
 
       - name: Login to AWS ECR
