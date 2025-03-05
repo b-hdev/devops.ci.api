@@ -54,8 +54,8 @@ jobs:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           TAG: ${{ steps.generate-tags.outputs.SHA }}
         run: |
-          docker build -t $REGISTRY/devops-ecr-iac:$TAG .
-          docker push $REGISTRY/devops-ecr-iac:$TAG
+          docker build -t $REGISTRY/devops-ecr-ci:$TAG .
+          docker push $REGISTRY/devops-ecr-ci:$TAG
 
       # - name: Push Docker Image
       #   run: |
