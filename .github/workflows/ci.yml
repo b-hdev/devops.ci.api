@@ -5,6 +5,11 @@ on:
     branches:
       - master
 
+permissions:
+  id-token: write
+  contents: write
+  issues: write
+
 jobs:
   build:
     name: 'Build and Push'
@@ -34,18 +39,29 @@ jobs:
           SHA=$(echo $GITHUB_SHA | head -c7)
           echo "SHA=$SHA" >> $GITHUB_OUTPUT
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-        #  registry: ghcr.io
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          role-to-assume: 'arn:aws:iam::741448934450:role/ecr-role'
+          aws-region: us-east-1
 
-      - name: Build and Push
-        uses: docker/build-push-action@v5
-        with:
-          push: true
-          tags: cyberplank/devops-ci-api:${{ steps.generate-tags.outputs.SHA }}, cyberplank/devops-ci-api:latest
+      - name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+
+      # - name: Login to GitHub Container Registry
+      #   uses: docker/login-action@v3
+      #   with:
+      #   #  registry: ghcr.io
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # - name: Build and Push
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     push: true
+      #     tags: cyberplank/devops-ci-api:${{ steps.generate-tags.outputs.SHA }}, cyberplank/devops-ci-api:latest
 
       # - name: Build Docker Image
       #   run: |
